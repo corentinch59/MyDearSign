@@ -6,47 +6,19 @@ using TMPro;
 using UnityEditor;
 using UnityEngine.Rendering.Universal;
 
-public class Panneau : MonoBehaviour
+public class Panneau : IInteractable
 {
     [SerializeField] private float zoneSize = 10;
     [SerializeField] private DecalProjector decal;
-
-    private List<Resource> _resources = new List<Resource>();
 
     [SerializeField] private float angleRange = 10;
 
     [SerializeField] private GameObject pannalAnchor;
     
-    public List<Resource> GetResources()
-    {
-        List<Resource> resources = new List<Resource>();
-        
-        // Get all resources around the pannel with distance < zoneSize
-        // Get all resource scripts
-        var r = FindObjectsOfType<Resource>();
-        foreach (var resource in r)
-        {
-            var distance = Vector3.Distance(resource.transform.position, transform.position);
-            if (distance < zoneSize)
-            {
-                resources.Add(resource);
-            }
-        }
-
-        return resources;
-    }
-    
     // Start is called before the first frame update
     void Start()
     {
         decal.size = new Vector3(zoneSize, zoneSize, 1);
-
-        _resources = GetResources();
-        
-        foreach (var resource in _resources)
-        {
-            resource.EnableResource(this);
-        }
         
         var angle1 = UnityEngine.Random.Range(-angleRange, angleRange);
         var angle2 = UnityEngine.Random.Range(-angleRange, angleRange);
@@ -54,16 +26,13 @@ public class Panneau : MonoBehaviour
         pannalAnchor.transform.Rotate(Vector3.forward, angle2);
     }
 
-    private void OnDisable()
+    public override void Interact()
     {
-        foreach (var resource in _resources)
-        {
-            resource.DisableResource(this);
-        }
+        Debug.Log("Interacting with Panneau");
     }
 
-    // Update is called once per frame
-    void Update()
+    public override bool CanInteract()
     {
+        return GameManager.instance.state == GameManager.GameState.BUYING;
     }
 }
