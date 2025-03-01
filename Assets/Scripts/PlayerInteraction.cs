@@ -8,6 +8,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private float _interactionRange;
     [SerializeField] private GameObject _prompt;
     [SerializeField] public Transform anchor;
+    [SerializeField] private GameObject _rollPin;
     
     public void ShowPrompt(bool show)
     {
@@ -66,5 +67,10 @@ public class PlayerInteraction : MonoBehaviour
     public Transform GetInteractableTransformAnchor()
     {
         return anchor;
+    }
+
+    public void ShowRollPin(bool show)
+    {
+        _rollPin.SetActive(show);
     }
 }

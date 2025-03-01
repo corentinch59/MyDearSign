@@ -51,16 +51,13 @@ public class Panneau : IInteractable
         decal.gameObject.SetActive(true);
         PositionPanal();
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize, LayerMask.GetMask("Resource"));
-        foreach (Collider hitCollider in hitColliders)
-        {
-            hitCollider.GetComponent<IPannalInteractable>().EnableResource(0);
-        }
-
         if (GameManager.instance.state == GameManager.GameState.FIGHTING)
         {
             EnableUpgrades(true);
+            EnableResourcesAround();
         }
+
+
     }
 
     public void EnableUpgrades(bool value)
@@ -88,8 +85,6 @@ public class Panneau : IInteractable
             o.transform.localRotation = Quaternion.identity;
             
         }
-        if(GameManager.instance.state == GameManager.GameState.FIGHTING)
-            EnableResourcesAround();
     }
 
     private void Awake()
@@ -131,10 +126,12 @@ public class Panneau : IInteractable
         if (owner == null)
         {
             PickUp(player.GetInteractableTransformAnchor(), player);
+            player.ShowRollPin(false);
         }
         else
         {
             Drop(player.transform.position);
+            player.ShowRollPin(true);
         }
     }
 
