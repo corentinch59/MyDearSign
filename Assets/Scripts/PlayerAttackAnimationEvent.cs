@@ -16,6 +16,7 @@ public class PlayerAttackAnimationEvent : MonoBehaviour
             {
                 Debug.Log("Killing");
                 mob.Kill();
+                break;
             }
         }
     }

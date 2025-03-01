@@ -7,6 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class Mob : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class Mob : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer headRenderer;
     [SerializeField] private SkinnedMeshRenderer bodyRenderer;
     [SerializeField] private Transform panalDisplay;
+    [SerializeField] private float captureDuration = 1.0f;
+    [SerializeField] private Slider captureSlider;
+    
+    private float captureTime = 0;
     
     [SerializeField] public Vector3 escapePoint;
     
@@ -47,8 +52,20 @@ public class Mob : MonoBehaviour
         aliveCount--;
     }
 
+    void ShowCapturePrompt(float percentage)
+    {
+        captureSlider.gameObject.SetActive(true);
+        captureSlider.value = percentage;
+    }
+
+    void HideCapturePrompt()
+    {
+        captureSlider.gameObject.SetActive(false);
+    }
+    
     private void Update()
     {
+        HideCapturePrompt();
         if (GameManager.instance.state != GameManager.GameState.FIGHTING) return;
         
         if (Panneau.instance.owner == this)
@@ -56,7 +73,7 @@ public class Mob : MonoBehaviour
             agent.isStopped = false;
             agent.SetDestination(escapePoint);
             
-            if (agent.remainingDistance < .5f)
+            if (Vector3.Distance(transform.position, escapePoint) < 1)
             {
                 GameManager.instance.ChangeState(GameManager.GameState.LOST);
             }
@@ -68,12 +85,20 @@ public class Mob : MonoBehaviour
 
             if (Vector3.Distance(transform.position, Panneau.instance.transform.position) < 1)
             {
-                Panneau.instance.PickUp(panalDisplay, this);
+                captureTime += Time.deltaTime;
+                ShowCapturePrompt(captureTime / captureDuration);
+                if (captureTime >= captureDuration)
+                {
+                    Panneau.instance.PickUp(panalDisplay, this);
+                    HideCapturePrompt();
+                }
             }
         }
         else
         {
             agent.isStopped = true;
+            // Make mob look at player 
+            transform.LookAt(FindObjectOfType<PlayerMovement>().transform);
         }
     }
 }
