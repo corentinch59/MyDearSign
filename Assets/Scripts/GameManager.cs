@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance = null;
 
+    public UnityEvent OnFighting;
+    public UnityEvent OnBuying;
+    public UnityEvent OnLost;
+
     // Prefabs
     [SerializeField] private GameObject mobPrefab;
     [SerializeField] private LayerMask groundLayer;
@@ -52,6 +56,7 @@ public class GameManager : MonoBehaviour
         {
             round++;
             stateText.text = stateTextBUYING;
+            OnBuying?.Invoke();
         }
         else if (state == GameState.FIGHTING)
         {
@@ -59,11 +64,13 @@ public class GameManager : MonoBehaviour
             _lastSpawnTime = Time.time;
             _spawnInterval = Mathf.Max(baseSpawnInterval - spawnIntervalDecrease * round, minSpawnInterval);
             stateText.text = stateTextFIGHTING;
+            OnFighting?.Invoke();
         }
         else
         {
             Debug.Log("You lost");
             stateText.text = stateTextLOST;
+            OnLost?.Invoke();
         }
     }
 
