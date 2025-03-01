@@ -19,6 +19,7 @@ public class Mob : MonoBehaviour
     [SerializeField] private Transform panalDisplay;
     [SerializeField] private float captureDuration = 1.0f;
     [SerializeField] private Slider captureSlider;
+    [SerializeField] private Animator _animator;
     
     private float captureTime = 0;
     
@@ -65,6 +66,8 @@ public class Mob : MonoBehaviour
     
     private void Update()
     {
+        _animator.SetFloat("speed", agent.velocity.sqrMagnitude);
+
         HideCapturePrompt();
         if (GameManager.instance.state != GameManager.GameState.FIGHTING) return;
         
@@ -72,7 +75,6 @@ public class Mob : MonoBehaviour
         {
             agent.isStopped = false;
             agent.SetDestination(escapePoint);
-            
             if (Vector3.Distance(transform.position, escapePoint) < 1)
             {
                 GameManager.instance.ChangeState(GameManager.GameState.LOST);
@@ -90,6 +92,7 @@ public class Mob : MonoBehaviour
                 if (captureTime >= captureDuration)
                 {
                     Panneau.instance.PickUp(panalDisplay, this);
+                    _animator.SetTrigger("carryFlag");
                     HideCapturePrompt();
                 }
             }
