@@ -8,15 +8,14 @@ using UnityEngine.Rendering.Universal;
 
 public class Panneau : MonoBehaviour
 {
-    [SerializeField]
-    public string cityName = "FEUR";
-    [SerializeField]
-    private TextMeshPro textUI;
-
     [SerializeField] private float zoneSize = 10;
     [SerializeField] private DecalProjector decal;
 
     private List<Resource> _resources = new List<Resource>();
+
+    [SerializeField] private float angleRange = 10;
+
+    [SerializeField] private GameObject pannalAnchor;
     
     public List<Resource> GetResources()
     {
@@ -40,7 +39,6 @@ public class Panneau : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        textUI.text = cityName;
         decal.size = new Vector3(zoneSize, zoneSize, 1);
 
         _resources = GetResources();
@@ -49,6 +47,11 @@ public class Panneau : MonoBehaviour
         {
             resource.EnableResource(this);
         }
+        
+        var angle1 = UnityEngine.Random.Range(-angleRange, angleRange);
+        var angle2 = UnityEngine.Random.Range(-angleRange, angleRange);
+        pannalAnchor.transform.Rotate(Vector3.left, angle1);
+        pannalAnchor.transform.Rotate(Vector3.forward, angle2);
     }
 
     private void OnDisable()

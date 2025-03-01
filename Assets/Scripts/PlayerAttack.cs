@@ -22,7 +22,6 @@ public class PlayerAttack : MonoBehaviour
             _animator.Play("attack-melee-right2");
             onAttack?.Invoke();
             _internalCooldown = 0;
-
         }
     }
 

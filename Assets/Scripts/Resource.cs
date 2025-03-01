@@ -64,6 +64,11 @@ public class Resource : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.instance.state == GameManager.GameState.BUYING)
+        {
+            return;
+        }
+        
         if (_resourceEnabled && _lastReloadTime + reloadDuration < Time.time)
         {
             _lastReloadTime = Time.time;
