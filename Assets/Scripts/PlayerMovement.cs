@@ -9,19 +9,41 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Config")] 
     [SerializeField] private Rigidbody _rb;
-    [SerializeField] private float _mSpeed;
+    [SerializeField] private float _initialSpeed;
+    [SerializeField] private float _sprintSpeedMult;
     [SerializeField] private Animator _mAnimator;
 
+    private Alterable<float> _internalSpeed;
     private Vector2 _mDirection;
+    private object _sprintObj;
+
+    public void Start()
+    {
+        _internalSpeed = new Alterable<float>(_initialSpeed);
+    }
 
     public void Move(InputAction.CallbackContext ctx)
     {
         _mDirection = ctx.ReadValue<Vector2>();
     }
 
+    public void Sprint(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            _sprintObj = _internalSpeed.AddTransformator((float x) => x * _sprintSpeedMult, 1);
+        }
+
+        if (ctx.canceled)
+        {
+            _internalSpeed.RemoveTransformator(_sprintObj);
+        }
+    }
+
     private void FixedUpdate()
     {
-        _rb.velocity = new Vector3(-_mDirection.x * _mSpeed, _rb.velocity.y, -_mDirection.y * _mSpeed);
+        float speed = _internalSpeed.CalculateValue();
+        _rb.velocity = new Vector3(-_mDirection.x * speed, _rb.velocity.y, -_mDirection.y * speed);
         _mAnimator.SetFloat("speed", _rb.velocity.magnitude);
         if (_rb.velocity.sqrMagnitude > 0.01f)
         {

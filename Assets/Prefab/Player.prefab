@@ -181,7 +181,19 @@ MonoBehaviour:
     m_ActionId: 856544a3-fdad-43e9-b575-d131533c7ed4
     m_ActionName: PlayerMap/Attack[/XInputControllerWindows/buttonWest]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4736930436171621669}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: Sprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a106a105-e729-4dc2-810d-eb596319d9bb
     m_ActionName: PlayerMap/Sprint
   - m_PersistentCalls:
@@ -218,7 +230,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 7886459276252839932}
-  _mSpeed: 5
+  _initialSpeed: 2
+  _sprintSpeedMult: 3
   _mAnimator: {fileID: 8581910556749044552}
 --- !u!114 &2714767856076031789
 MonoBehaviour:
