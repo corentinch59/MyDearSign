@@ -21,7 +21,13 @@ public class Panneau : IInteractable
     public void PickUp(Transform parent, MonoBehaviour newOwner)
     {
         if (owner != null) return;
-        
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize, LayerMask.GetMask("Resource"));
+        foreach (Collider hitCollider in hitColliders)
+        {
+            hitCollider.GetComponent<IPannalInteractable>().DisableResource();
+        }
+
         owner = newOwner;
         transform.SetParent(parent);
         transform.localPosition = Vector3.zero;
@@ -43,6 +49,12 @@ public class Panneau : IInteractable
         transform.rotation = Quaternion.identity;
         decal.gameObject.SetActive(true);
         PositionPanal();
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize, LayerMask.GetMask("Resource"));
+        foreach (Collider hitCollider in hitColliders)
+        {
+            hitCollider.GetComponent<IPannalInteractable>().EnableResource(0);
+        }
     }
 
     private void Awake()
