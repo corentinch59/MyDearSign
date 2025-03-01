@@ -24,11 +24,8 @@ public class Panneau : IInteractable
     {
         if (owner != null) return;
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize, LayerMask.GetMask("Resource"));
-        foreach (Collider hitCollider in hitColliders)
-        {
-            hitCollider.GetComponent<IPannalInteractable>().DisableResource();
-        }
+        if(GameManager.instance.state == GameManager.GameState.FIGHTING)
+            DisableResourcesAround();
 
         owner = newOwner;
         transform.SetParent(parent);
@@ -90,6 +87,8 @@ public class Panneau : IInteractable
             o.transform.localPosition = new Vector3(0, i++ * upgradeDistance, 0);
             
         }
+        if(GameManager.instance.state == GameManager.GameState.FIGHTING)
+            EnableResourcesAround();
     }
 
     private void Awake()
@@ -135,6 +134,24 @@ public class Panneau : IInteractable
         else
         {
             Drop(player.transform.position);
+        }
+    }
+
+    public void EnableResourcesAround()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
+        foreach (Collider hitCollider in hitColliders)
+        {
+            hitCollider.GetComponent<IPannalInteractable>().EnableResource(0);
+        }
+    }
+
+    public void DisableResourcesAround()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
+        foreach (Collider hitCollider in hitColliders)
+        {
+            hitCollider.GetComponent<IPannalInteractable>().DisableResource();
         }
     }
 
