@@ -180,6 +180,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 856544a3-fdad-43e9-b575-d131533c7ed4
     m_ActionName: PlayerMap/Attack[/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a106a105-e729-4dc2-810d-eb596319d9bb
+    m_ActionName: PlayerMap/Sprint
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 937428425713333289}
+        m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
+        m_MethodName: Interact
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 18483fac-1f3a-4cef-8207-828c2e90150d
+    m_ActionName: PlayerMap/Interact[/XInputControllerWindows/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerMap
@@ -232,6 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactionRange: 1
   _prompt: {fileID: 611642991094646550}
+  anchor: {fileID: 7271217835998796735}
 --- !u!1 &611642991094646550
 GameObject:
   m_ObjectHideFlags: 0

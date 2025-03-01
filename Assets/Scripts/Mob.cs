@@ -15,55 +15,60 @@ public class Mob : MonoBehaviour
     [SerializeField] private List<Mesh> bodyModels;
     [SerializeField] private SkinnedMeshRenderer headRenderer;
     [SerializeField] private SkinnedMeshRenderer bodyRenderer;
-    [SerializeField] private GameObject panalDisplay;
-
-    private bool _hasPanal;
-    private bool _dead;
+    [SerializeField] private Transform panalDisplay;
+    
+    [SerializeField] public Vector3 escapePoint;
+    
+    static public int aliveCount = 0;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         // Spawn random model
         var head = headModels[Random.Range(0, headModels.Count)];
         headRenderer.sharedMesh = head;
         var body = bodyModels[Random.Range(0, bodyModels.Count)];
         bodyRenderer.sharedMesh = body;
-        panalDisplay.SetActive(false);
+        escapePoint = transform.position;
+        aliveCount++;
     }
 
     public void Kill()
     {
-        _dead = true;
-        if (_hasPanal) GameManager.instance.SpawnPanal(transform.position);
+        if (Panneau.instance.owner == this)
+        {
+            Panneau.instance.Drop(transform.position);
+        }
         Destroy(gameObject);
+    }
+    
+    private void OnDisable()
+    {
+        aliveCount--;
     }
 
     private void Update()
     {
-        var panal = FindObjectOfType<Panneau>();
-
-        if (panal)
+        if (GameManager.instance.state != GameManager.GameState.FIGHTING) return;
+        
+        if (Panneau.instance.owner == this)
         {
             agent.isStopped = false;
-            agent.SetDestination(panal.transform.position);
+            agent.SetDestination(escapePoint);
             
-            if (Vector3.Distance(transform.position, panal.transform.position) < 1)
+            if (agent.remainingDistance < .5f)
             {
-                if (!_hasPanal)
-                {
-                    Destroy(panal.gameObject);
-                    _hasPanal = true;
-                    panalDisplay.SetActive(true);
-                    agent.SetDestination(GameManager.instance.GetRandomPositionOnBorderOfNavMesh());
-                }
-            }
-        }
-        else if (_hasPanal)
-        {
-            if (agent.remainingDistance < 0.1f)
-            {
-                agent.isStopped = true;
                 GameManager.instance.ChangeState(GameManager.GameState.LOST);
+            }
+            
+        } else if (Panneau.instance.owner == null)
+        {
+            agent.isStopped = false;
+            agent.SetDestination(Panneau.instance.transform.position);
+
+            if (Vector3.Distance(transform.position, Panneau.instance.transform.position) < 1)
+            {
+                Panneau.instance.PickUp(panalDisplay, this);
             }
         }
         else
@@ -80,11 +85,5 @@ public class MobEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-
-        var mob = target as Mob;
-        if (GUILayout.Button("Kill"))
-        {
-            mob.Kill();
-        }
     }
 }

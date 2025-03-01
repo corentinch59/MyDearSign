@@ -7,14 +7,19 @@ public class PlayerInteraction : MonoBehaviour
 {
     [SerializeField] private float _interactionRange;
     [SerializeField] private GameObject _prompt;
+    [SerializeField] public Transform anchor;
     
     public void ShowPrompt(bool show)
     {
         _prompt.SetActive(show);
     }
 
-    void Interact(InputAction.CallbackContext ctx)
+    public void Interact(InputAction.CallbackContext ctx)
     {
+        Debug.Log("Interacting");
+
+        if (!ctx.started) return;
+        
         var interactables = FindObjectsOfType<IInteractable>();
         // Find closest that can be interacted
         IInteractable closest = null;
@@ -24,7 +29,7 @@ public class PlayerInteraction : MonoBehaviour
             if (!interactable.CanInteract()) continue;
             
             var distance = Vector3.Distance(interactable.transform.position, transform.position);
-            if (distance < closestDistance)
+            if (distance < closestDistance && distance <= _interactionRange)
             {
                 closest = interactable;
                 closestDistance = distance;
@@ -33,7 +38,7 @@ public class PlayerInteraction : MonoBehaviour
         
         if (closest != null)
         {
-            closest.Interact();
+            closest.Interact(this);
         }
     }
 
@@ -55,5 +60,10 @@ public class PlayerInteraction : MonoBehaviour
         }
         
         ShowPrompt(false);
+    }
+
+    public Transform GetInteractableTransformAnchor()
+    {
+        return anchor;
     }
 }

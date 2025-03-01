@@ -23,9 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float spawnIntervalDecrease = 0.1f;
     [SerializeField] private float minSpawnInterval = .5f;
 
-    private List<Mob> _mobs = new List<Mob>();
     private int _spawnCount;
-    private int _killedMobs;
     private float _lastSpawnTime;
     private float _spawnInterval;
 
@@ -34,12 +32,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameState state = GameState.BUYING;
     [SerializeField] public string cityName = "Ma ville";
     [SerializeField] public int money = 0;
-    [SerializeField] public UnityEvent<GameState> onStateChange;
 
     public static GameManager instance = null;
 
     // Prefabs
-    [SerializeField] public GameObject panalPrefab;
     [SerializeField] private GameObject mobPrefab;
     [SerializeField] private LayerMask groundLayer;
 
@@ -52,16 +48,14 @@ public class GameManager : MonoBehaviour
         }
         else if (state == GameState.FIGHTING)
         {
-            _killedMobs = 0;
             _spawnCount = baseSpawnCount + spawnRoundIncrease * round;
             _lastSpawnTime = Time.time;
             _spawnInterval = Mathf.Max(baseSpawnInterval - spawnIntervalDecrease * round, minSpawnInterval);
         }
         else
         {
+            Debug.Log("You lost");
         }
-
-        onStateChange.Invoke(state);
     }
 
     private void Awake()
@@ -94,7 +88,6 @@ public class GameManager : MonoBehaviour
         var position = GetRandomPositionOnBorderOfNavMesh();
         var mob = Instantiate(mobPrefab, position, Quaternion.identity);
         var mobScript = mob.GetComponent<Mob>();
-        _mobs.Add(mobScript);
         return mobScript;
     }
 
@@ -103,30 +96,18 @@ public class GameManager : MonoBehaviour
     {
         if (state == GameState.FIGHTING)
         {
-            if (_spawnCount <= 0)
+            if (_spawnCount <= 0 && Mob.aliveCount == 0)
             {
                 ChangeState(GameState.BUYING);
             }
 
-            if (Time.time - _lastSpawnTime > _spawnInterval)
+            if (_spawnCount > 0 && Time.time - _lastSpawnTime > _spawnInterval)
             {
                 SpawnMob();
                 _spawnCount--;
                 _lastSpawnTime = Time.time;
             }
         }
-    }
-
-    public void SpawnPanal(Vector3 transformPosition)
-    {
-        // ray cast to find the ground
-        RaycastHit hit;
-        if (Physics.Raycast(transformPosition + Vector3.up * 10, Vector3.down, out hit, 100, groundLayer))
-        {
-            transformPosition = hit.point;
-        }
-        
-        Instantiate(panalPrefab, transformPosition, Quaternion.identity);
     }
 }
 

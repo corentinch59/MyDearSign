@@ -51,6 +51,7 @@ MonoBehaviour:
   decal: {fileID: 2874530021178169983}
   angleRange: 10
   pannalAnchor: {fileID: 3765053519332014839}
+  owner: {fileID: 0}
 --- !u!136 &7954760984866626844
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -66,7 +67,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
