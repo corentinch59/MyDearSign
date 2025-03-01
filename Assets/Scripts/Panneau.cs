@@ -13,6 +13,8 @@ public class Panneau : IInteractable
     [SerializeField] private float angleRange = 10;
     [SerializeField] private GameObject pannalAnchor;
     [SerializeField] public MonoBehaviour owner = null;
+    [SerializeField] public Transform upgradeAnchor;
+    [SerializeField] public float upgradeDistance = 1;
     
     private Vector3 defaultRotation;
     
@@ -33,6 +35,8 @@ public class Panneau : IInteractable
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         decal.gameObject.SetActive(false);
+        
+        EnableUpgrades(false);
     }
 
     public void Drop(Vector3 position)
@@ -54,6 +58,37 @@ public class Panneau : IInteractable
         foreach (Collider hitCollider in hitColliders)
         {
             hitCollider.GetComponent<IPannalInteractable>().EnableResource(0);
+        }
+
+        if (GameManager.instance.state == GameManager.GameState.FIGHTING)
+        {
+            EnableUpgrades(true);
+        }
+    }
+
+    public void EnableUpgrades(bool value)
+    {
+        // Destory all children
+        foreach (Transform child in upgradeAnchor)
+        {
+            child.GetComponent<IPanalUpgrade>().isEnabled = value;
+        }
+    }
+
+    public void SetupUpgrades()
+    {
+        // Destory all children
+        foreach (Transform child in upgradeAnchor)
+        {
+            Destroy(child.gameObject);
+        }
+
+        int i = 0;
+        foreach (var upgrade in GameManager.instance.panalUpgrades)
+        {
+            var o = Instantiate(upgrade.upgradePrefab, Vector3.zero, Quaternion.identity, upgradeAnchor);
+            o.transform.localPosition = new Vector3(0, i++ * upgradeDistance, 0);
+            
         }
     }
 

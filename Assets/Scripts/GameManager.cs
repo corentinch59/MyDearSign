@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameState state = GameState.BUYING;
     [SerializeField] public string cityName = "Ma ville";
     [SerializeField] public int money = 0;
+    [SerializeField] public List<PanalUpgrade> panalUpgrades;
 
     public static GameManager instance = null;
 
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
         {
             round++;
             stateText.text = stateTextBUYING;
+            Panneau.instance.EnableUpgrades(false);
         }
         else if (state == GameState.FIGHTING)
         {
@@ -59,11 +61,13 @@ public class GameManager : MonoBehaviour
             _lastSpawnTime = Time.time;
             _spawnInterval = Mathf.Max(baseSpawnInterval - spawnIntervalDecrease * round, minSpawnInterval);
             stateText.text = stateTextFIGHTING;
+            Panneau.instance.EnableUpgrades(true);
         }
         else
         {
             Debug.Log("You lost");
             stateText.text = stateTextLOST;
+            Panneau.instance.EnableUpgrades(false);
         }
     }
 
@@ -116,6 +120,20 @@ public class GameManager : MonoBehaviour
                 _spawnCount--;
                 _lastSpawnTime = Time.time;
             }
+        }
+    }
+
+    public void BuyUpgrade(PanalUpgrade upgrade)
+    {
+        Debug.Log("Buying " + upgrade.name);
+        
+        if (money >= upgrade.cost)
+        {
+            money -= upgrade.cost;
+            panalUpgrades.Add(upgrade);
+        
+            Panneau.instance.SetupUpgrades();
+            Panneau.instance.EnableUpgrades(false);
         }
     }
 }

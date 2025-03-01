@@ -18,27 +18,28 @@ public class PlayerInteraction : MonoBehaviour
     {
         Debug.Log("Interacting");
 
-        if (!ctx.started) return;
-        
-        var interactables = FindObjectsOfType<IInteractable>();
-        // Find closest that can be interacted
-        IInteractable closest = null;
-        float closestDistance = float.MaxValue;
-        foreach (var interactable in interactables)
+        if (ctx.canceled)
         {
-            if (!interactable.CanInteract()) continue;
-            
-            var distance = Vector3.Distance(interactable.transform.position, transform.position);
-            if (distance < closestDistance && distance <= _interactionRange)
+            var interactables = FindObjectsOfType<IInteractable>();
+            // Find closest that can be interacted
+            IInteractable closest = null;
+            float closestDistance = float.MaxValue;
+            foreach (var interactable in interactables)
             {
-                closest = interactable;
-                closestDistance = distance;
+                if (!interactable.CanInteract()) continue;
+            
+                var distance = Vector3.Distance(interactable.transform.position, transform.position);
+                if (distance < closestDistance && distance <= _interactionRange)
+                {
+                    closest = interactable;
+                    closestDistance = distance;
+                }
             }
-        }
         
-        if (closest != null)
-        {
-            closest.Interact(this);
+            if (closest != null)
+            {
+                closest.Interact(this);
+            }
         }
     }
 

@@ -10,14 +10,26 @@ public class PlayerAttackAnimationEvent : MonoBehaviour
     {
         // Check all mobs in the attack collider
         var mobs = FindObjectsOfType<Mob>();
+        
+        // find closest of collider
+        float closestDistance = float.MaxValue;
+        Mob closestMob = null;
         foreach (var mob in mobs)
         {
             if (_attackCollider.bounds.Intersects(mob.GetComponent<Collider>().bounds))
             {
-                Debug.Log("Killing");
-                mob.Kill();
-                break;
+                var distance = Vector3.Distance(mob.transform.position, transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestMob = mob;
+                }
             }
+        }
+        
+        if (closestMob != null)
+        {
+            closestMob.Kill();
         }
     }
 }

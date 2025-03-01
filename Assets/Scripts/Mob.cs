@@ -98,7 +98,7 @@ public class Mob : MonoBehaviour
         {
             agent.isStopped = true;
             // Make mob look at player 
-            transform.LookAt(FindObjectOfType<PlayerMovement>().transform);
+            // transform.LookAt(FindObjectOfType<PlayerMovement>().transform);
         }
     }
 }
