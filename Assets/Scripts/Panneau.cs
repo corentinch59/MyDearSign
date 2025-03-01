@@ -22,7 +22,7 @@ public class Panneau : IInteractable
     {
         if (owner != null) return;
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize, LayerMask.GetMask("Resource"));
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
         foreach (Collider hitCollider in hitColliders)
         {
             hitCollider.GetComponent<IPannalInteractable>().DisableResource();
@@ -50,7 +50,7 @@ public class Panneau : IInteractable
         decal.gameObject.SetActive(true);
         PositionPanal();
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize, LayerMask.GetMask("Resource"));
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
         foreach (Collider hitCollider in hitColliders)
         {
             hitCollider.GetComponent<IPannalInteractable>().EnableResource(0);
