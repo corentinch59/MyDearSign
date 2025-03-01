@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2994678319242896044}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: arm-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 4736930436171621669}
   - component: {fileID: 2714767856076031789}
   - component: {fileID: 937428425713333289}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 283229424151230901}
   - component: {fileID: 7882984342631755079}
   - component: {fileID: 1930180073971484465}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,7 +365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6731232602481721613}
   - component: {fileID: 8664319300956670202}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +417,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5070759903118611355}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: leg-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5461803399793007456}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7271217835998796735}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: rollpin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -513,7 +513,7 @@ GameObject:
   - component: {fileID: 4426611355535816772}
   - component: {fileID: 3413297945880405282}
   - component: {fileID: 8519090079445765073}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -587,7 +587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6779401675859543180}
   - component: {fileID: 4008292536322979429}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: head-mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -678,7 +678,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6108088434449569400}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -714,7 +714,7 @@ GameObject:
   - component: {fileID: 6152354697221563806}
   - component: {fileID: 8581910556749044552}
   - component: {fileID: 3965784044094719709}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: character-male-c
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -782,7 +782,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8032596834371923466}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7545678679482235346}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: arm-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -848,7 +848,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1050233785330184244}
   - component: {fileID: 839338643908410430}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: body-mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -942,7 +942,7 @@ GameObject:
   - component: {fileID: 4949117183760864083}
   - component: {fileID: 6310025527787658738}
   - component: {fileID: 2436551242944951371}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1028,7 +1028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4279285478064091787}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: leg-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1122,6 +1122,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: rollingPin
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 483e8182b9884134f84b3ed82ca22791,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

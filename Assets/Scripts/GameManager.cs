@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.AI.Navigation;
 using UnityEditor;
 using UnityEngine;
@@ -22,6 +23,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int spawnRoundIncrease = 5;
     [SerializeField] private float spawnIntervalDecrease = 0.1f;
     [SerializeField] private float minSpawnInterval = .5f;
+    
+    [SerializeField] private string stateTextBUYING = "Améliore!!";
+    [SerializeField] private string stateTextFIGHTING = "Défends!!";
+    [SerializeField] private string stateTextLOST = "Défaite!!";
+    [SerializeField] TMP_Text stateText;
 
     private int _spawnCount;
     private float _lastSpawnTime;
@@ -45,16 +51,19 @@ public class GameManager : MonoBehaviour
         if (state == GameState.BUYING)
         {
             round++;
+            stateText.text = stateTextBUYING;
         }
         else if (state == GameState.FIGHTING)
         {
             _spawnCount = baseSpawnCount + spawnRoundIncrease * round;
             _lastSpawnTime = Time.time;
             _spawnInterval = Mathf.Max(baseSpawnInterval - spawnIntervalDecrease * round, minSpawnInterval);
+            stateText.text = stateTextFIGHTING;
         }
         else
         {
             Debug.Log("You lost");
+            stateText.text = stateTextLOST;
         }
     }
 
