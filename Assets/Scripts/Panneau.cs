@@ -85,6 +85,7 @@ public class Panneau : IInteractable
         {
             var o = Instantiate(upgrade.upgradePrefab, Vector3.zero, Quaternion.identity, upgradeAnchor);
             o.transform.localPosition = new Vector3(0, i++ * upgradeDistance, 0);
+            o.transform.localRotation = Quaternion.identity;
             
         }
         if(GameManager.instance.state == GameManager.GameState.FIGHTING)
