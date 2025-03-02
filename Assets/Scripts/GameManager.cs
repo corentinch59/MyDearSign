@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.AI.Navigation;
@@ -7,6 +8,7 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 
 public class GameManager : MonoBehaviour
@@ -19,7 +21,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Mobs
-    [SerializeField] private NavMeshSurface navMesh;
+    [SerializeField] public NavMeshSurface navMesh;
     [SerializeField] private int baseSpawnCount = 5;
     [SerializeField] private float baseSpawnInterval = 3.0f;
     [SerializeField] private int spawnRoundIncrease = 5;
@@ -62,6 +64,9 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private GameObject _loseScreen;
     [SerializeField] private Button _restartButton;
+    
+    private Vector3 navMeshMin;
+    private Vector3 navMeshMax;
 
     public void ChangeState(GameState newState)
     {
@@ -118,32 +123,40 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+        NavMeshTriangulation tri = NavMesh.CalculateTriangulation();
+        
+        navMeshMin = tri.vertices[0];
+        navMeshMax = tri.vertices[0];
+        for (int i = 1; i < tri.vertices.Length; i++)
+        {
+            navMeshMin = Vector3.Min(navMeshMin, tri.vertices[i]);
+            navMeshMax = Vector3.Max(navMeshMax, tri.vertices[i]);
+        }
     }
 
     public Vector3 GetRandomPositionOnBorderOfNavMesh()
     {
         // Random vector3 on unit circle
-        float angle = Random.Range(0, 2 * Mathf.PI);
-        var x = Mathf.Cos(angle);
-        var y = Mathf.Sin(angle);
+        Vector3 randomPos = GetRandomPositionInNavMesh();
+        
         NavMeshHit hit;
-        NavMesh.SamplePosition(new Vector3(x, 0, y) * 1000.0f, out hit, Mathf.Infinity, navMesh.layerMask);
-        var position = hit.position;
+        NavMesh.FindClosestEdge(randomPos, out hit, NavMesh.AllAreas);
 
-        return position;
+        return hit.position;
     }
-
+    
     public Vector3 GetRandomPositionInNavMesh()
     {
-        Vector3 randomDirection = Random.insideUnitSphere * _spawnRadius;
-        randomDirection += transform.position;
-        NavMeshHit hit;
-        Vector3 finalPosition = Vector3.zero;
-        if (NavMesh.SamplePosition(randomDirection, out hit, _spawnRadius, 1))
+        
+        Vector3 randomPos = new Vector3(Random.Range(navMeshMin.x, navMeshMax.x), 0, Random.Range(navMeshMin.z, navMeshMax.z));
+        if (NavMesh.SamplePosition(randomPos, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
         {
-            finalPosition = hit.position;
+            return hit.position;
         }
-        return finalPosition;
+        
+        return Vector3.zero;
     }
 
     Mob SpawnMob()
