@@ -4997,7 +4997,7 @@ MonoBehaviour:
     type: 3}
   travelDuration: 1
   reloadTime: 1.1
-  range: 185.13
+  range: 2
   explosionPrefab: {fileID: 741064212047574347, guid: 7db7a28d56f9afc40a84513c63255402,
     type: 3}
   shootEffect: {fileID: 1211762781790785607}
@@ -5018,7 +5018,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  minTargetingRange: 3
+  minTargetingRange: 6
 --- !u!114 &8640925367905642974
 MonoBehaviour:
   m_ObjectHideFlags: 0
