@@ -1389,6 +1389,7 @@ MonoBehaviour:
   _resourceGameObject:
   - {fileID: 1765589976133460880, guid: 376195170cc69b3489bd462f895147c1, type: 3}
   _spawnRadius: 5
+  _resourceNumber: 1
   _loseScreen: {fileID: 8866859189164483884}
   _restartButton: {fileID: 2496621090422249722}
 --- !u!114 &6386296767982892724

@@ -82,9 +82,11 @@ public class GameManager : MonoBehaviour
     private List<GameObject> _resourceGameObject;
 
     [SerializeField] private float _spawnRadius;
+    [SerializeField] private float _resourceNumber;
 
     private List<GameObject> _spawnedResources = new List<GameObject>();
 
+    [Header("UI Config")]
     [SerializeField] private GameObject _loseScreen;
     [SerializeField] private Button _restartButton;
 
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviour
             round++;
             stateText.text = stateTextBUYING;
             OnBuying?.Invoke();
+            _resourceNumber += round % 2;
 
             if (_spawnedResources.Count > 0)
                 foreach (var spawnedResource in _spawnedResources)
@@ -106,7 +109,7 @@ public class GameManager : MonoBehaviour
                     Destroy(spawnedResource);
                 }
 
-            for (int i = 0; i < 2; ++i)
+            for (int i = 0; i < _resourceNumber; ++i)
             {
                 Vector3 randomPos = GetRandomPositionInNavMesh();
                 Quaternion randomYRotation = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
