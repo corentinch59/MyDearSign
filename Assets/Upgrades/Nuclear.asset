@@ -15,4 +15,5 @@ MonoBehaviour:
   upgradeName: "Ogive nucl\xE9aire"
   description: "Cr\xE9e un missile toute les 10 secondes"
   cost: 100
-  upgradePrefab: {fileID: 0}
+  upgradePrefab: {fileID: 2756397468751832731, guid: 01fdd0818ce305147895a1fad130a98c,
+    type: 3}

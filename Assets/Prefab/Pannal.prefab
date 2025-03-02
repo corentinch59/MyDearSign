@@ -53,7 +53,7 @@ MonoBehaviour:
   pannalAnchor: {fileID: 3765053519332014839}
   owner: {fileID: 0}
   upgradeAnchor: {fileID: 3368649294125482933}
-  upgradeDistance: 1
+  upgradeDistance: 0.5
   textUI: {fileID: 6911771311436229917}
 --- !u!136 &7954760984866626844
 CapsuleCollider:

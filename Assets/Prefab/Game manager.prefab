@@ -480,4 +480,4 @@ MonoBehaviour:
     m_Bits: 128
   _resourceGameObject:
   - {fileID: 1765589976133460880, guid: 376195170cc69b3489bd462f895147c1, type: 3}
-  _spawnRadius: 100
+  _spawnRadius: 5

@@ -34,7 +34,7 @@ public class CoinResource : MonoBehaviour, IPannalInteractable
 
     public void DisableResource()
     {
-        StopCoroutine(_moneyGenerationCoroutine);
+        if (_moneyGenerationCoroutine != null) StopCoroutine(_moneyGenerationCoroutine);
         bonusDisableFunction?.Invoke();
     }
 
