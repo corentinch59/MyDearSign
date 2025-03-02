@@ -12,6 +12,7 @@ public class Turret : IPanalUpgrade
     [SerializeField] public int punchVibrato = 6;
     [SerializeField] public float punchElasticity = 0.05f;
     [SerializeField] public List<ParticleSystem> particles;
+    [SerializeField] public AudioSource shootSource;
     
     private Mob target;
     private float timer = 0;
@@ -44,6 +45,8 @@ public class Turret : IPanalUpgrade
         {
             if (timer >= lockOnDuration)
             {
+                shootSource.Play();
+                shootSource.pitch = Random.Range(0.9f, 1.1f);
                 var direction = target.transform.position - head.transform.position;
                 head.transform.DOPunchScale(punchScale, punchDuration, punchVibrato, punchElasticity);
                 timer = 0;

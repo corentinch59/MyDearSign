@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
         state = newState;
         if (state == GameState.BUYING)
         {
-            round++;
+            round = round + 1;
             stateText.text = stateTextBUYING;
             OnBuying?.Invoke();
             _resourceNumber += round % 2;

@@ -38,6 +38,11 @@ public class CoinResource : MonoBehaviour, IPannalInteractable
         bonusDisableFunction?.Invoke();
     }
 
+    public void RandomPitch(AudioSource source)
+    {
+        source.pitch = Random.Range(0.9f, 1.1f);
+    }
+
     IEnumerator GenerateMoney()
     {
         while (true)

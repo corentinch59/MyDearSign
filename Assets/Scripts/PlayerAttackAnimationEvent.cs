@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAttackAnimationEvent : MonoBehaviour
 {
     [SerializeField] private Collider _attackCollider;
+    [SerializeField] private AudioSource _audioSource;
 
     public void Attack()
     {
@@ -30,6 +31,8 @@ public class PlayerAttackAnimationEvent : MonoBehaviour
         if (closestMob != null)
         {
             closestMob.Kill(transform);
+            _audioSource.Play();
+            _audioSource.pitch = Random.Range(0.9f, 1.1f);
         }
     }
 }

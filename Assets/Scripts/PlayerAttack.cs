@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private float _attackCooldown;
     [SerializeField] private Transform _rollingPin;
+    [SerializeField] private AudioSource _whooshSound;
 
     public UnityEvent onAttack;
     private float _internalCooldown;
@@ -22,6 +23,8 @@ public class PlayerAttack : MonoBehaviour
             _animator.Play("attack-melee-right2");
             onAttack?.Invoke();
             _internalCooldown = 0;
+            _whooshSound.pitch = Random.Range(0.9f, 1.1f);
+            _whooshSound.Play();
         }
     }
 
