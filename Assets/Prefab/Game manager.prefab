@@ -1370,6 +1370,11 @@ MonoBehaviour:
   stateText: {fileID: 9129517160985206683}
   thunesText: {fileID: 1970520411959775345}
   roundText: {fileID: 2862050125700668269}
+  _camera: {fileID: 0}
+  _timeDilation: 0
+  _cameraDuration: 0
+  _cameraDistance: 0
+  _player: {fileID: 0}
   state: 1
   panalUpgrades: []
   OnFighting:

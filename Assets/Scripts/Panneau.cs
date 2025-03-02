@@ -38,6 +38,15 @@ public class Panneau : IInteractable
         defaultRotation = pannalAnchor.transform.rotation.eulerAngles;
     }
 
+
+    public void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

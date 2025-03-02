@@ -154,6 +154,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public void Start()
+    {
+        if (_spawnedResources.Count > 0)
+            foreach (var spawnedResource in _spawnedResources)
+            {
+                Destroy(spawnedResource);
+            }
+
+        for (int i = 0; i < _resourceNumber; ++i)
+        {
+            Vector3 randomPos = GetRandomPositionInNavMesh();
+            Quaternion randomYRotation = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
+            _spawnedResources.Add(Instantiate(_resourceGameObject[0], randomPos, randomYRotation));
+        }
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -163,8 +180,18 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
         {
             Destroy(gameObject);
+            Debug.Log("Cant spawn managfer");
         }
 
+        {
+            round = 1;
+            Mob.aliveCount = 0;
+            money = 0;
+            panalUpgrades = new List<PanalUpgrade>();
+            state = GameState.BUYING;
+            stateText.text = stateTextBUYING;
+            _resourceNumber += round % 2;
+        }
 
         NavMeshTriangulation tri = NavMesh.CalculateTriangulation();
 
@@ -174,6 +201,21 @@ public class GameManager : MonoBehaviour
         {
             navMeshMin = Vector3.Min(navMeshMin, tri.vertices[i]);
             navMeshMax = Vector3.Max(navMeshMax, tri.vertices[i]);
+        }
+    }
+
+    public void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+        }
+    }
+    public void OnDisable()
+    {
+        if (instance == this)
+        {
+            instance = null;
         }
     }
 
