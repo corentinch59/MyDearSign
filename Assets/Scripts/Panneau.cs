@@ -140,7 +140,7 @@ public class Panneau : IInteractable
     public void EnableResourcesAround()
     {
         Collider[] hitColliders =
-            Physics.OverlapSphere(transform.position, _initialZoneSize / 2f, LayerMask.GetMask("Resource"));
+            Physics.OverlapSphere(transform.position, internalZoneSize.CalculateValue() / 2f, LayerMask.GetMask("Resource"));
         foreach (Collider hitCollider in hitColliders)
         {
             hitCollider.GetComponent<IPannalInteractable>().EnableResource(0);
@@ -150,7 +150,7 @@ public class Panneau : IInteractable
     public void DisableResourcesAround()
     {
         Collider[] hitColliders =
-            Physics.OverlapSphere(transform.position, _initialZoneSize / 2f, LayerMask.GetMask("Resource"));
+            Physics.OverlapSphere(transform.position, internalZoneSize.CalculateValue() / 2f, LayerMask.GetMask("Resource"));
         foreach (Collider hitCollider in hitColliders)
         {
             hitCollider.GetComponent<IPannalInteractable>().DisableResource();
