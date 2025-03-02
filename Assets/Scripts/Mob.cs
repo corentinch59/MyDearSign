@@ -21,6 +21,7 @@ public class Mob : MonoBehaviour
     [SerializeField] private Transform panalDisplay;
     [SerializeField] private float captureDuration = 1.0f;
     [SerializeField] private Slider captureSlider;
+    [SerializeField] private GameObject sliderParent;
     [SerializeField] private Animator _animator;
 
     [Header("Death Tween config")]
@@ -88,13 +89,13 @@ public class Mob : MonoBehaviour
 
     void ShowCapturePrompt(float percentage)
     {
-        captureSlider.gameObject.SetActive(true);
-        captureSlider.value = percentage;
+        // sliderParent.SetActive(true);
+        // captureSlider.value = percentage;
     }
 
     void HideCapturePrompt()
     {
-        captureSlider.gameObject.SetActive(false);
+        // sliderParent.SetActive(false);
     }
     
     private void Update()
@@ -111,7 +112,7 @@ public class Mob : MonoBehaviour
         {
             agent.isStopped = false;
             agent.SetDestination(escapePoint);
-            if (Vector3.Distance(transform.position, escapePoint) < 1)
+            if (Vector3.Distance(transform.position, escapePoint) < .1f)
             {
                 GameManager.instance.ChangeState(GameManager.GameState.LOST);
             }
