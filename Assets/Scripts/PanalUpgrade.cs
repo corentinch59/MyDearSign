@@ -9,4 +9,5 @@ public class PanalUpgrade : ScriptableObject
     public string description;
     public int cost;
     public GameObject upgradePrefab;
+    public Vector3 offset;
 }

@@ -17,3 +17,4 @@ MonoBehaviour:
   cost: 100
   upgradePrefab: {fileID: 2756397468751832731, guid: 01fdd0818ce305147895a1fad130a98c,
     type: 3}
+  offset: {x: 0, y: 0.45, z: 0}

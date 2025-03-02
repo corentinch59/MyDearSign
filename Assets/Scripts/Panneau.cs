@@ -103,11 +103,13 @@ public class Panneau : IInteractable
         }
 
         int i = 0;
+        Vector3 previousOffset = Vector3.zero;
         foreach (var upgrade in GameManager.instance.panalUpgrades)
         {
             var o = Instantiate(upgrade.upgradePrefab, Vector3.zero, Quaternion.identity, upgradeAnchor);
-            o.transform.localPosition = new Vector3(0, i++ * upgradeDistance, 0);
+            o.transform.localPosition = previousOffset;
             o.transform.localRotation = Quaternion.identity;
+            previousOffset += upgrade.offset;
         }
     }
 
