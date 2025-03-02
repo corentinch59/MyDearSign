@@ -504,8 +504,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Prot\xE9ger le drapeau\nAm\xE9liorer avec des pi\xE8ces\nExploiter les
-    coffres avec le drapeau"
+  m_text: "Prot\xE9ger le panneau\nAm\xE9liorer avec des pi\xE8ces\nExploiter les
+    coffres avec le panneau"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6f4f515025f4c494abf0372524fc8dad, type: 2}
   m_sharedMaterial: {fileID: -811610583114770430, guid: 6f4f515025f4c494abf0372524fc8dad,

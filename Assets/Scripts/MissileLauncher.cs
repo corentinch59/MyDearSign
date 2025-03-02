@@ -40,27 +40,14 @@ public class MissileLauncher : IPanalUpgrade
     private void Fire()
     {
         _lastFireTime = Time.time;
-        
-        var mobs = FindObjectsOfType<Mob>();
 
-        if (mobs.Length == 0) return;
-        
-        // Choose closest mob that if at least at minRange of the ground
         NavMesh.SamplePosition(transform.position, out var groundHit, Mathf.Infinity, NavMesh.AllAreas);
-        
-        Mob target = null;
-        float minDistance = float.MaxValue;
-        foreach (var mob in mobs)
-        {
-            if (Vector3.Distance(mob.transform.position, groundHit.position) >= minTargetingRange)
-            {
-                if (Vector3.Distance(mob.transform.position, groundHit.position) < minDistance)
-                {
-                    target = mob;
-                    minDistance = Vector3.Distance(mob.transform.position, transform.position);
-                }
-            }
-        }
+        Collider[] mobsHit = Physics.OverlapSphere(groundHit.position, minTargetingRange, LayerMask.GetMask("Mob"));
+        Debug.Log(mobsHit.Length);
+
+        if (mobsHit.Length == 0) return;
+
+        Mob target = mobsHit[Random.Range(0, mobsHit.Length - 1)].GetComponent<Mob>();
 
         if (!target) return;
         

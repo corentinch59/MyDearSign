@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace DefaultNamespace
     public class RandomText : MonoBehaviour
     {
         public string[] texts;
+
         
         private void Start()
         {

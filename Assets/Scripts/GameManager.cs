@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Cinemachine;
+using DG.Tweening;
 using TMPro;
 using Unity.AI.Navigation;
 using UnityEditor;
@@ -21,6 +23,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Mobs
+    [Header("Mob Config")]
     [SerializeField] public NavMeshSurface navMesh;
     [SerializeField] private int baseSpawnCount = 5;
     [SerializeField] private float baseSpawnInterval = 3.0f;
@@ -28,6 +31,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float spawnIntervalDecrease = 0.1f;
     [SerializeField] private float minSpawnInterval = .5f;
 
+    [Header("UI Config")]
     [SerializeField] private string stateTextBUYING = "Améliore!!";
     [SerializeField] private string stateTextFIGHTING = "Défends!!";
     [SerializeField] private string stateTextLOST = "Défaite!!";
@@ -35,7 +39,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text thunesText;
     [SerializeField] TMP_Text roundText;
 
+    [Header("Camera Config")] 
+    [SerializeField] private CinemachineVirtualCamera _camera;
+    [SerializeField] private float _timeDilation;
+    [SerializeField] private float _cameraDuration;
+    [SerializeField] private float _cameraDistance;
+    [SerializeField] private Transform _player;
+
     private int _spawnCount;
+    public int GetSpawnCount
+    {
+        get => _spawnCount;
+    }
     private float _lastSpawnTime;
     private float _spawnInterval;
 
@@ -228,5 +243,26 @@ public class GameManager : MonoBehaviour
         }
         
         return false;
+    }
+
+    public void SetCameraToMob(Transform mob)
+    {
+        Time.timeScale = _timeDilation;
+        _camera.Follow = mob;
+        _camera.LookAt = mob;
+
+        var body = _camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        DOTween.To(() => body.m_CameraDistance, x => body.m_CameraDistance = x, _cameraDistance, _cameraDuration * _timeDilation)
+            .OnComplete(ResetCamToPlayer);
+    }
+
+    public void ResetCamToPlayer()
+    {
+        Time.timeScale = 1;
+        _camera.Follow = _player;
+        _camera.LookAt = _player;
+
+        var body = _camera.GetCinemachineComponent<CinemachineFramingTransposer>();
+        DOTween.To(() => body.m_CameraDistance, x => body.m_CameraDistance = x, 5f, 0.5f);
     }
 }

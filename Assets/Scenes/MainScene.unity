@@ -23906,6 +23906,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9032067853086028193, guid: 95ad1eda829ad8e4b933c92419f37cd4,
         type: 3}
+      propertyPath: _camera
+      value: 
+      objectReference: {fileID: 748712399}
+    - target: {fileID: 9032067853086028193, guid: 95ad1eda829ad8e4b933c92419f37cd4,
+        type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 1637366321}
+    - target: {fileID: 9032067853086028193, guid: 95ad1eda829ad8e4b933c92419f37cd4,
+        type: 3}
+      propertyPath: _timeDilation
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9032067853086028193, guid: 95ad1eda829ad8e4b933c92419f37cd4,
+        type: 3}
+      propertyPath: _cameraDistance
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 9032067853086028193, guid: 95ad1eda829ad8e4b933c92419f37cd4,
+        type: 3}
+      propertyPath: _cameraDuration
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9032067853086028193, guid: 95ad1eda829ad8e4b933c92419f37cd4,
+        type: 3}
       propertyPath: OnLost.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
