@@ -54,7 +54,10 @@ public class Mob : MonoBehaviour
 
     public void Kill(Transform killer)
     {
+        if (isDead)
+            return;
         isDead = true;
+        aliveCount--;
         _animator.SetBool("isdead", true);
         OnKill?.Invoke();
         if (Panneau.instance.owner == this)
@@ -80,12 +83,19 @@ public class Mob : MonoBehaviour
         {
             Destroy(gameObject);
         };
+
+        Debug.Log("Alive count : " + aliveCount);
+        Debug.Log("Spawn count : " + GameManager.instance.GetSpawnCount);
+        if (aliveCount == 0 && GameManager.instance.GetSpawnCount == 0)
+        {
+            GameManager.instance.SetCameraToMob(transform);
+        }
     }
     
-    private void OnDisable()
-    {
-        aliveCount--;
-    }
+    //private void OnDisable()
+    //{
+    //    aliveCount--;
+    //}
 
     void ShowCapturePrompt(float percentage)
     {
