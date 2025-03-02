@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class MissileLauncher : IPanalUpgrade
 {
     [SerializeField] private GameObject missilePrefab;
+    [SerializeField] private GameObject missileDecal;
     [SerializeField] private float travelDuration = .5f;
     [SerializeField] private float reloadTime = 10.0f;
     [SerializeField] private float range = 2.0f;
@@ -14,6 +17,7 @@ public class MissileLauncher : IPanalUpgrade
     [SerializeField] private ParticleSystem shootEffect;
 
     private float _lastFireTime = 0.0f;
+    private GameObject missileDecalInstance;
 
     private void Update()
     {
@@ -46,9 +50,15 @@ public class MissileLauncher : IPanalUpgrade
             {
                 closestDistance = distance;
                 targetPosition = mob.transform.position;
+
+               
             }
         }
-        
+
+        Quaternion rot = Quaternion.Euler(90, 0, 0);
+        missileDecalInstance = Instantiate(missileDecal, targetPosition, rot);
+        missileDecalInstance.GetComponent<DecalProjector>().size = new Vector3(range * 2, range * 2, 4);
+
         var upPoint = transform.position + Vector3.up * 2.0f;
         
         missile.transform.DOPath(new[] { transform.position, upPoint, targetPosition }, travelDuration, PathType.CatmullRom)
@@ -61,13 +71,17 @@ public class MissileLauncher : IPanalUpgrade
                 {
                     if (Vector3.Distance(mob.transform.position, targetPosition) <= range)
                     {
-                        mob.Kill(missile.transform);
+                        if(mob)
+                            mob.Kill(missile.transform);
                     }
                 }
                 
                 Instantiate(explosionPrefab, targetPosition, Quaternion.identity);
 
-                Destroy(missile);
+                if(missileDecalInstance)
+                    Destroy(missileDecalInstance);
+                if(missile)
+                    Destroy(missile);
             });
     }
 }
