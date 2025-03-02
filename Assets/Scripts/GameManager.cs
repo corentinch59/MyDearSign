@@ -5,6 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
@@ -57,6 +59,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float _spawnRadius;
 
     private List<GameObject> _spawnedResources = new List<GameObject>();
+    
+    [SerializeField] private GameObject _loseScreen;
+    [SerializeField] private Button _restartButton;
 
     public void ChangeState(GameState newState)
     {
@@ -97,6 +102,9 @@ public class GameManager : MonoBehaviour
             stateText.text = stateTextLOST;
             OnLost?.Invoke();
             Panneau.instance.EnableUpgrades(false);
+            _loseScreen.SetActive(true);
+            FindObjectOfType<PlayerInput>().SwitchCurrentActionMap("UI");
+            _restartButton.Select();
         }
     }
 
