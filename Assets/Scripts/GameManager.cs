@@ -227,29 +227,3 @@ public class GameManager : MonoBehaviour
         return false;
     }
 }
-
-// Custom editor that allows to change the state of the game manager in game
-[CustomEditor(typeof(GameManager))]
-public class GameManagerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-
-        GameManager myScript = (GameManager)target;
-        if (GUILayout.Button("Buying"))
-        {
-            myScript.ChangeState(GameManager.GameState.BUYING);
-        }
-
-        if (GUILayout.Button("Fighting"))
-        {
-            myScript.ChangeState(GameManager.GameState.FIGHTING);
-        }
-
-        if (GUILayout.Button("Lost"))
-        {
-            myScript.ChangeState(GameManager.GameState.LOST);
-        }
-    }
-}

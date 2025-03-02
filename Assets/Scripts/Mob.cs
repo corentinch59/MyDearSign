@@ -142,12 +142,3 @@ public class Mob : MonoBehaviour
     }
 }
 
-// Custom editor with kill button
-[CustomEditor(typeof(Mob))]
-public class MobEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-    }
-}
