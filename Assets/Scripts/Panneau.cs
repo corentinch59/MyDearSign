@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
+using UnityEngine.AI;
 using UnityEngine.Rendering.Universal;
 
 public class Panneau : IInteractable
@@ -43,12 +44,10 @@ public class Panneau : IInteractable
         transform.SetParent(null);
 
         // Ray cast to find the ground
-        var ray = new Ray(position + Vector3.up * 100, Vector3.down);
-        if (Physics.Raycast(ray, out var hit, 200, LayerMask.GetMask("Ground")))
-        {
-            transform.position = hit.point;
-        }
+        NavMeshHit hit;
+        NavMesh.SamplePosition(position, out hit, Mathf.Infinity, NavMesh.AllAreas);
 
+        transform.position = hit.position;
         transform.rotation = Quaternion.identity;
         decal.gameObject.SetActive(true);
         PositionPanal();

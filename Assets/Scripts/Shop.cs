@@ -14,6 +14,7 @@ public class Shop : IInteractable
     [SerializeField] public GameObject buttonPrefab;
     [SerializeField] public GameObject grid;
     [SerializeField] public List<PanalUpgrade> upgrades;
+    [SerializeField] public Canvas helpPrompt;
 
     private List<Button> _buttons = new List<Button>();
 
@@ -32,6 +33,11 @@ public class Shop : IInteractable
             button.onClick.AddListener(() => { GameManager.instance.BuyUpgrade(upgrade); });
             _buttons.Add(button);
         }
+    }
+
+    private void Update()
+    {
+        helpPrompt.gameObject.SetActive(GameManager.instance.state == GameManager.GameState.BUYING);
     }
 
     public override void Interact(PlayerInteraction player)
