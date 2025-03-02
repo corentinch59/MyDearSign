@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string stateTextFIGHTING = "Défends!!";
     [SerializeField] private string stateTextLOST = "Défaite!!";
     [SerializeField] TMP_Text stateText;
+    [SerializeField] TMP_Text thunesText;
 
     private int _spawnCount;
     private float _lastSpawnTime;
@@ -36,8 +37,9 @@ public class GameManager : MonoBehaviour
     // game state
     [SerializeField] public int round = 0;
     [SerializeField] public GameState state = GameState.BUYING;
-    [SerializeField] public string cityName = "Ma ville";
-    [SerializeField] public int money = 0;
+    
+    [SerializeField] public int money { get { return _moneyInternal; } set { _moneyInternal = value; thunesText.text = value.ToString(); } }
+    private int _moneyInternal = 0;
     [SerializeField] public List<PanalUpgrade> panalUpgrades;
 
     public static GameManager instance = null;

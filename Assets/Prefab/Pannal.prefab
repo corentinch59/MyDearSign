@@ -54,6 +54,7 @@ MonoBehaviour:
   owner: {fileID: 0}
   upgradeAnchor: {fileID: 3368649294125482933}
   upgradeDistance: 1
+  textUI: {fileID: 6911771311436229917}
 --- !u!136 &7954760984866626844
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -201,7 +202,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Anchor
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8209055468070481231, guid: 868d30acb2ca94d41a8f42c9a7a3d501, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -224,3 +226,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1127062849304138204}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6911771311436229917 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5787031872071826625, guid: 868d30acb2ca94d41a8f42c9a7a3d501,
+    type: 3}
+  m_PrefabInstance: {fileID: 1127062849304138204}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -15,16 +15,17 @@ public class Panneau : IInteractable
     [SerializeField] public MonoBehaviour owner = null;
     [SerializeField] public Transform upgradeAnchor;
     [SerializeField] public float upgradeDistance = 1;
+    [SerializeField] public TextMeshPro textUI;
     
     private Vector3 defaultRotation;
-    
+
     static public Panneau instance = null;
 
     public void PickUp(Transform parent, MonoBehaviour newOwner)
     {
         if (owner != null) return;
 
-        if(GameManager.instance.state == GameManager.GameState.FIGHTING)
+        if (GameManager.instance.state == GameManager.GameState.FIGHTING)
             DisableResourcesAround();
 
         owner = newOwner;
@@ -32,7 +33,7 @@ public class Panneau : IInteractable
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
         decal.gameObject.SetActive(false);
-        
+
         EnableUpgrades(false);
     }
 
@@ -40,13 +41,14 @@ public class Panneau : IInteractable
     {
         owner = null;
         transform.SetParent(null);
-        
+
         // Ray cast to find the ground
         var ray = new Ray(position + Vector3.up * 100, Vector3.down);
         if (Physics.Raycast(ray, out var hit, 200, LayerMask.GetMask("Ground")))
         {
             transform.position = hit.point;
         }
+
         transform.rotation = Quaternion.identity;
         decal.gameObject.SetActive(true);
         PositionPanal();
@@ -83,7 +85,6 @@ public class Panneau : IInteractable
             var o = Instantiate(upgrade.upgradePrefab, Vector3.zero, Quaternion.identity, upgradeAnchor);
             o.transform.localPosition = new Vector3(0, i++ * upgradeDistance, 0);
             o.transform.localRotation = Quaternion.identity;
-            
         }
     }
 
@@ -97,7 +98,7 @@ public class Panneau : IInteractable
         {
             Destroy(this);
         }
-        
+
         defaultRotation = pannalAnchor.transform.rotation.eulerAngles;
     }
 
@@ -105,14 +106,14 @@ public class Panneau : IInteractable
     void Start()
     {
         decal.size = new Vector3(zoneSize, zoneSize, 1);
-        
+
         PositionPanal();
     }
 
     void PositionPanal()
     {
         pannalAnchor.transform.rotation = Quaternion.Euler(defaultRotation);
-        
+
         var angle1 = UnityEngine.Random.Range(-angleRange, angleRange);
         var angle2 = UnityEngine.Random.Range(-angleRange, angleRange);
         pannalAnchor.transform.Rotate(Vector3.left, angle1);
@@ -137,7 +138,8 @@ public class Panneau : IInteractable
 
     public void EnableResourcesAround()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
+        Collider[] hitColliders =
+            Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
         foreach (Collider hitCollider in hitColliders)
         {
             hitCollider.GetComponent<IPannalInteractable>().EnableResource(0);
@@ -146,7 +148,8 @@ public class Panneau : IInteractable
 
     public void DisableResourcesAround()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
+        Collider[] hitColliders =
+            Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
         foreach (Collider hitCollider in hitColliders)
         {
             hitCollider.GetComponent<IPannalInteractable>().DisableResource();

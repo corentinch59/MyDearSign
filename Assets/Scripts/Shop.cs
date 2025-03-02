@@ -17,6 +17,12 @@ public class Shop : IInteractable
 
     private List<Button> _buttons = new List<Button>();
 
+    
+    public void SetPanneauText(string text)
+    {
+        Panneau.instance.textUI.text = text;
+    }
+    
     public void Start()
     {
         foreach (PanalUpgrade upgrade in upgrades)
