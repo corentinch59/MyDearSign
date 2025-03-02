@@ -52,6 +52,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject mobPrefab;
     [SerializeField] private LayerMask groundLayer;
 
+    [Header("Resource Spawning")] 
+    [SerializeField] private List<GameObject> _resourceGameObject;
+    [SerializeField] private float _spawnRadius;
+
+    private List<GameObject> _spawnedResources = new List<GameObject>();
+
     public void ChangeState(GameState newState)
     {
         state = newState;
@@ -60,6 +66,20 @@ public class GameManager : MonoBehaviour
             round++;
             stateText.text = stateTextBUYING;
             OnBuying?.Invoke();
+
+            if(_spawnedResources.Count > 0)
+                foreach (var spawnedResource in _spawnedResources)
+                {
+                    Destroy(spawnedResource);
+                }
+
+            for (int i = 0; i < 2; ++i)
+            {
+                Vector3 randomPos = GetRandomPositionInNavMesh();
+                Quaternion randomYRotation = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
+                _spawnedResources.Add(Instantiate(_resourceGameObject[0], randomPos, randomYRotation));
+            }
+
             Panneau.instance.EnableUpgrades(false);
         }
         else if (state == GameState.FIGHTING)
@@ -103,6 +123,19 @@ public class GameManager : MonoBehaviour
         var position = hit.position;
 
         return position;
+    }
+
+    public Vector3 GetRandomPositionInNavMesh()
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * _spawnRadius;
+        randomDirection += transform.position;
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, _spawnRadius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
     }
 
     Mob SpawnMob()

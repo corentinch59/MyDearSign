@@ -463,7 +463,6 @@ MonoBehaviour:
   thunesText: {fileID: 1970520411959775345}
   round: 0
   state: 1
-  cityName: "Mont\xE7eau-les-mines"
   panalUpgrades: []
   OnFighting:
     m_PersistentCalls:
@@ -479,3 +478,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+  _resourceGameObject:
+  - {fileID: 1765589976133460880, guid: 376195170cc69b3489bd462f895147c1, type: 3}
+  _spawnRadius: 100
