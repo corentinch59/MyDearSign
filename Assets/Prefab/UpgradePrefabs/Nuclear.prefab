@@ -4949,7 +4949,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 45991e78eb9e58c48b37c308f3a4a271,
         type: 3}
       propertyPath: m_Name
-      value: weapon-cannon
+      value: Nuclear
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4985,8 +4985,8 @@ MonoBehaviour:
   isEnabled: 1
   missilePrefab: {fileID: 6335900078943738166, guid: 1363052c899f56946b90b277407e1a07,
     type: 3}
-  travelDuration: 2
-  reloadTime: 10
+  travelDuration: 1
+  reloadTime: 5
   range: 2
   explosionPrefab: {fileID: 741064212047574347, guid: 7db7a28d56f9afc40a84513c63255402,
     type: 3}

@@ -31,25 +31,27 @@ public class MissileLauncher : IPanalUpgrade
         
         shootEffect.Play();
         
-        // Get all mobs, find the circle of radius range that contains the most mobs
         var mobs = FindObjectsOfType<Mob>();
 
         if (mobs.Length == 0) return;
         
         var missile = Instantiate(missilePrefab, transform.position, transform.rotation);
 
-        // average position of mobs
-        var averagePosition = Vector3.zero;
+        float closestDistance = float.MaxValue;
+        Vector3 targetPosition = Vector3.zero;
         foreach (var mob in mobs)
         {
-            averagePosition += mob.transform.position;
+            var distance = Vector3.Distance(mob.transform.position, transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                targetPosition = mob.transform.position;
+            }
         }
-
-        averagePosition /= mobs.Length;
-
-        Vector3 upPoint = (transform.position + averagePosition) / 2.0f + Vector3.up * 2.0f;
         
-        missile.transform.DOPath(new[] { transform.position, upPoint, averagePosition }, travelDuration, PathType.CatmullRom)
+        var upPoint = transform.position + Vector3.up * 2.0f;
+        
+        missile.transform.DOPath(new[] { transform.position, upPoint, targetPosition }, travelDuration, PathType.CatmullRom)
             .SetLookAt(0.01f)
             .SetEase(Ease.Linear)
             .OnComplete(() =>
@@ -57,13 +59,13 @@ public class MissileLauncher : IPanalUpgrade
                 var mobs2 = FindObjectsOfType<Mob>();
                 foreach (var mob in mobs2)
                 {
-                    if (Vector3.Distance(mob.transform.position, averagePosition) <= range)
+                    if (Vector3.Distance(mob.transform.position, targetPosition) <= range)
                     {
                         mob.Kill(missile.transform);
                     }
                 }
                 
-                Instantiate(explosionPrefab, averagePosition, Quaternion.identity);
+                Instantiate(explosionPrefab, targetPosition, Quaternion.identity);
 
                 Destroy(missile);
             });
