@@ -29,7 +29,7 @@ public class PlayerAttackAnimationEvent : MonoBehaviour
         
         if (closestMob != null)
         {
-            closestMob.Kill();
+            closestMob.Kill(transform);
         }
     }
 }

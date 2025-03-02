@@ -48,7 +48,7 @@ public class Turret : IPanalUpgrade
                 head.transform.DOPunchScale(punchScale, punchDuration, punchVibrato, punchElasticity);
                 timer = 0;
                 particles.ForEach(p => p.Play());
-                target.Kill();
+                target.Kill(transform);
                 target = null;
             }
             else

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,9 +21,16 @@ public class Mob : MonoBehaviour
     [SerializeField] private float captureDuration = 1.0f;
     [SerializeField] private Slider captureSlider;
     [SerializeField] private Animator _animator;
+
+    [Header("Death Tween config")]
+    [SerializeField] private Vector3 _jumpTween;
+    [SerializeField] private float _scaleTweenDuration;
     
+    private CapsuleCollider _collider;
     private float captureTime = 0;
-    
+    private bool isDead = false;
+
+    [Header("Escape")]
     [SerializeField] public Vector3 escapePoint;
     
     static public int aliveCount = 0;
@@ -36,16 +44,35 @@ public class Mob : MonoBehaviour
         var body = bodyModels[Random.Range(0, bodyModels.Count)];
         bodyRenderer.sharedMesh = body;
         escapePoint = transform.position;
+        _collider = GetComponent<CapsuleCollider>();
         aliveCount++;
     }
 
-    public void Kill()
+    public void Kill(Transform killer)
     {
+        isDead = true;
+        _animator.SetBool("isdead", true);
+
         if (Panneau.instance.owner == this)
         {
             Panneau.instance.Drop(transform.position);
+            _animator.SetTrigger("carryFlag");
         }
-        Destroy(gameObject);
+
+        _collider.enabled = false;
+        agent.enabled = false;
+
+        Vector3 direction = transform.position - killer.transform.position;
+        direction = new Vector3(direction.x, 0, direction.z);
+
+        Quaternion rot = Quaternion.LookRotation(-direction);
+        transform.rotation = rot;
+
+        Sequence s = DOTween.Sequence();
+        s.Append(transform.DOJump(transform.position + direction.normalized * 2f, _jumpTween.x, (int)_jumpTween.y, _jumpTween.z));
+        s.Join(transform.DOScale(Vector3.zero, _scaleTweenDuration));
+
+        s.onComplete += () => Destroy(gameObject);
     }
     
     private void OnDisable()
@@ -66,6 +93,9 @@ public class Mob : MonoBehaviour
     
     private void Update()
     {
+        if (isDead)
+            return;
+
         _animator.SetFloat("speed", agent.velocity.sqrMagnitude);
 
         HideCapturePrompt();

@@ -521,6 +521,8 @@ MonoBehaviour:
   captureDuration: 1
   captureSlider: {fileID: 2778610521731436177}
   _animator: {fileID: 2482451777271256472}
+  _jumpTween: {x: 1, y: 2, z: 1}
+  _scaleTweenDuration: 1
   escapePoint: {x: 0, y: 0, z: 0}
 --- !u!136 &7615467502337701394
 CapsuleCollider:
