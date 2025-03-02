@@ -8,6 +8,7 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 using UnityEditor;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Mob : MonoBehaviour
@@ -32,6 +33,8 @@ public class Mob : MonoBehaviour
 
     [Header("Escape")]
     [SerializeField] public Vector3 escapePoint;
+
+    public UnityEvent OnKill;
     
     static public int aliveCount = 0;
 
@@ -52,7 +55,7 @@ public class Mob : MonoBehaviour
     {
         isDead = true;
         _animator.SetBool("isdead", true);
-
+        OnKill?.Invoke();
         if (Panneau.instance.owner == this)
         {
             Panneau.instance.Drop(transform.position);
@@ -72,7 +75,10 @@ public class Mob : MonoBehaviour
         s.Append(transform.DOJump(transform.position + direction.normalized * 2f, _jumpTween.x, (int)_jumpTween.y, _jumpTween.z));
         s.Join(transform.DOScale(Vector3.zero, _scaleTweenDuration));
 
-        s.onComplete += () => Destroy(gameObject);
+        s.onComplete += () =>
+        {
+            Destroy(gameObject);
+        };
     }
     
     private void OnDisable()
