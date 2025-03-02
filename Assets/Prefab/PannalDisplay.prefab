@@ -92,7 +92,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4111376232239229851}
-  - component: {fileID: 8209055468070481231}
   m_Layer: 0
   m_Name: PannalDisplay
   m_TagString: Untagged
@@ -119,19 +118,6 @@ Transform:
   - {fileID: 2385774342406951529}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8209055468070481231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4315584835135367979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cbfba39d3734f78aa31ce843f887930, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textUI: {fileID: 5787031872071826625}
 --- !u!1 &6963431988410200764
 GameObject:
   m_ObjectHideFlags: 0
