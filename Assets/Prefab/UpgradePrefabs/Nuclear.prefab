@@ -4997,7 +4997,7 @@ MonoBehaviour:
     type: 3}
   travelDuration: 1
   reloadTime: 1.1
-  range: 2
+  range: 185.13
   explosionPrefab: {fileID: 741064212047574347, guid: 7db7a28d56f9afc40a84513c63255402,
     type: 3}
   shootEffect: {fileID: 1211762781790785607}
