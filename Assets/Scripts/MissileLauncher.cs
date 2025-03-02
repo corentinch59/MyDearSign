@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public class MissileLauncher : IPanalUpgrade
@@ -15,6 +16,7 @@ public class MissileLauncher : IPanalUpgrade
     [SerializeField] private float range = 2.0f;
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private ParticleSystem shootEffect;
+    public UnityEvent MissileLand;
 
     private float _lastFireTime = 0.0f;
     private GameObject missileDecalInstance;
@@ -77,6 +79,7 @@ public class MissileLauncher : IPanalUpgrade
                 }
                 
                 Instantiate(explosionPrefab, targetPosition, Quaternion.identity);
+                MissileLand?.Invoke();
 
                 if(missileDecalInstance)
                     Destroy(missileDecalInstance);
