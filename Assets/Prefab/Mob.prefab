@@ -508,13 +508,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 7548671621544839078}
   headModels:
+  - {fileID: -1793059242609255079, guid: 66d0a7827a130b04abefc3a82aab892a, type: 3}
+  - {fileID: -1793059242609255079, guid: bd7a2dabff13276478f99bff557ac893, type: 3}
+  - {fileID: -1793059242609255079, guid: dd2954a441426e24ca6a7d81ddf8b09d, type: 3}
+  - {fileID: -1793059242609255079, guid: efb155a7763fed2458e338b690c6c56d, type: 3}
+  - {fileID: -1793059242609255079, guid: ac63bd9e1535e2a4c85beba655c62462, type: 3}
   - {fileID: -1793059242609255079, guid: b8f1e48851835644bbdf87157531f972, type: 3}
   - {fileID: -1793059242609255079, guid: 00519ad868cd0ea40ab78fbf9a23671d, type: 3}
-  - {fileID: -1793059242609255079, guid: dd2954a441426e24ca6a7d81ddf8b09d, type: 3}
+  - {fileID: -1793059242609255079, guid: 4da56ba10fc9019458ba4a8e04821bde, type: 3}
+  - {fileID: -1793059242609255079, guid: 1a73daa56c48b06428f0c1f0e821848e, type: 3}
+  - {fileID: -1793059242609255079, guid: 0973f28909b0d8f42a64b5b3da7cb535, type: 3}
   bodyModels:
   - {fileID: 988656143610355917, guid: 00519ad868cd0ea40ab78fbf9a23671d, type: 3}
-  - {fileID: 988656143610355917, guid: 00519ad868cd0ea40ab78fbf9a23671d, type: 3}
-  - {fileID: 988656143610355917, guid: b8f1e48851835644bbdf87157531f972, type: 3}
+  - {fileID: 988656143610355917, guid: 66d0a7827a130b04abefc3a82aab892a, type: 3}
+  - {fileID: 988656143610355917, guid: bd7a2dabff13276478f99bff557ac893, type: 3}
+  - {fileID: 988656143610355917, guid: dd2954a441426e24ca6a7d81ddf8b09d, type: 3}
+  - {fileID: 988656143610355917, guid: efb155a7763fed2458e338b690c6c56d, type: 3}
+  - {fileID: 988656143610355917, guid: ac63bd9e1535e2a4c85beba655c62462, type: 3}
+  - {fileID: 988656143610355917, guid: 8fee8eb1b4679a74a8358d9b04121923, type: 3}
+  - {fileID: 988656143610355917, guid: 4da56ba10fc9019458ba4a8e04821bde, type: 3}
+  - {fileID: 988656143610355917, guid: 1a73daa56c48b06428f0c1f0e821848e, type: 3}
+  - {fileID: 988656143610355917, guid: 0973f28909b0d8f42a64b5b3da7cb535, type: 3}
   headRenderer: {fileID: 670120236163358517}
   bodyRenderer: {fileID: 3839600236538041710}
   panalDisplay: {fileID: 4666866365251327973}

@@ -27,22 +27,44 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int spawnRoundIncrease = 5;
     [SerializeField] private float spawnIntervalDecrease = 0.1f;
     [SerializeField] private float minSpawnInterval = .5f;
-    
+
     [SerializeField] private string stateTextBUYING = "Améliore!!";
     [SerializeField] private string stateTextFIGHTING = "Défends!!";
     [SerializeField] private string stateTextLOST = "Défaite!!";
     [SerializeField] TMP_Text stateText;
     [SerializeField] TMP_Text thunesText;
+    [SerializeField] TMP_Text roundText;
 
     private int _spawnCount;
     private float _lastSpawnTime;
     private float _spawnInterval;
 
     // game state
-    [SerializeField] public int round = 0;
+    [SerializeField]
+    public int round
+    {
+        get { return roundInternal; }
+        set
+        {
+            roundInternal = value;
+            roundText.text = roundInternal.ToString();
+        }
+    }
+
+    private int roundInternal = 0;
     [SerializeField] public GameState state = GameState.BUYING;
-    
-    [SerializeField] public int money { get { return _moneyInternal; } set { _moneyInternal = value; thunesText.text = value.ToString(); } }
+
+    [SerializeField]
+    public int money
+    {
+        get { return _moneyInternal; }
+        set
+        {
+            _moneyInternal = value;
+            thunesText.text = value.ToString();
+        }
+    }
+
     private int _moneyInternal = 0;
     [SerializeField] public List<PanalUpgrade> panalUpgrades;
 
@@ -56,15 +78,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject mobPrefab;
     [SerializeField] private LayerMask groundLayer;
 
-    [Header("Resource Spawning")] 
-    [SerializeField] private List<GameObject> _resourceGameObject;
+    [Header("Resource Spawning")] [SerializeField]
+    private List<GameObject> _resourceGameObject;
+
     [SerializeField] private float _spawnRadius;
 
     private List<GameObject> _spawnedResources = new List<GameObject>();
-    
+
     [SerializeField] private GameObject _loseScreen;
     [SerializeField] private Button _restartButton;
-    
+
     private Vector3 navMeshMin;
     private Vector3 navMeshMax;
 
@@ -77,7 +100,7 @@ public class GameManager : MonoBehaviour
             stateText.text = stateTextBUYING;
             OnBuying?.Invoke();
 
-            if(_spawnedResources.Count > 0)
+            if (_spawnedResources.Count > 0)
                 foreach (var spawnedResource in _spawnedResources)
                 {
                     Destroy(spawnedResource);
@@ -126,7 +149,7 @@ public class GameManager : MonoBehaviour
 
 
         NavMeshTriangulation tri = NavMesh.CalculateTriangulation();
-        
+
         navMeshMin = tri.vertices[0];
         navMeshMax = tri.vertices[0];
         for (int i = 1; i < tri.vertices.Length; i++)
@@ -140,22 +163,22 @@ public class GameManager : MonoBehaviour
     {
         // Random vector3 on unit circle
         Vector3 randomPos = GetRandomPositionInNavMesh();
-        
+
         NavMeshHit hit;
         NavMesh.FindClosestEdge(randomPos, out hit, NavMesh.AllAreas);
 
         return hit.position;
     }
-    
+
     public Vector3 GetRandomPositionInNavMesh()
     {
-        
-        Vector3 randomPos = new Vector3(Random.Range(navMeshMin.x, navMeshMax.x), 0, Random.Range(navMeshMin.z, navMeshMax.z));
+        Vector3 randomPos = new Vector3(Random.Range(navMeshMin.x, navMeshMax.x), 0,
+            Random.Range(navMeshMin.z, navMeshMax.z));
         if (NavMesh.SamplePosition(randomPos, out NavMeshHit hit, Mathf.Infinity, NavMesh.AllAreas))
         {
             return hit.position;
         }
-        
+
         return Vector3.zero;
     }
 
@@ -186,18 +209,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void BuyUpgrade(PanalUpgrade upgrade)
+    public bool BuyUpgrade(PanalUpgrade upgrade)
     {
         Debug.Log("Buying " + upgrade.name);
-        
+
         if (money >= upgrade.cost)
         {
             money -= upgrade.cost;
             panalUpgrades.Add(upgrade);
-        
+
             Panneau.instance.SetupUpgrades();
             Panneau.instance.EnableUpgrades(false);
+            
+            return true;
         }
+        
+        return false;
     }
 }
 

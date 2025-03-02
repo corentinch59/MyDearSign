@@ -15,9 +15,16 @@ public class Shop : IInteractable
     [SerializeField] public GameObject grid;
     [SerializeField] public List<PanalUpgrade> upgrades;
     [SerializeField] public Canvas helpPrompt;
+    [SerializeField] public GameObject achatReussi;
+    [SerializeField] public Button closeAchatReussi;
 
     private List<Button> _buttons = new List<Button>();
 
+    public void CloseAchatReussi()
+    {
+        achatReussi.SetActive(false);
+        _buttons.First().Select();
+    }
     
     public void SetPanneauText(string text)
     {
@@ -30,7 +37,14 @@ public class Shop : IInteractable
         {
             var button = Instantiate(buttonPrefab, grid.transform).GetComponent<Button>();
             button.GetComponentInChildren<UpgradeDisplay>().SetUpgrade(upgrade);
-            button.onClick.AddListener(() => { GameManager.instance.BuyUpgrade(upgrade); });
+            button.onClick.AddListener(() =>
+            {
+                if (GameManager.instance.BuyUpgrade(upgrade))
+                {
+                    achatReussi.SetActive(true);
+                    closeAchatReussi.Select();
+                }
+            });
             _buttons.Add(button);
         }
     }
