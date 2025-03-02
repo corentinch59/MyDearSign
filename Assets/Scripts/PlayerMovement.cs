@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _initialSpeed;
     [SerializeField] private float _sprintSpeedMult;
     [SerializeField] private Animator _mAnimator;
+    [SerializeField] private ParticleSystem _particles;
 
     private Alterable<float> _internalSpeed;
     private Vector2 _mDirection;
@@ -20,11 +21,22 @@ public class PlayerMovement : MonoBehaviour
     public void Start()
     {
         _internalSpeed = new Alterable<float>(_initialSpeed);
+        _particles.Stop();
     }
 
     public void Move(InputAction.CallbackContext ctx)
     {
         _mDirection = ctx.ReadValue<Vector2>();
+        if (_mDirection.sqrMagnitude > 0.5f)
+        {
+            if(_particles.isStopped)
+                _particles.Play();
+        }
+        else
+        {
+            if(_particles.isPlaying)
+                _particles.Stop();
+        }
     }
 
     public void Sprint(InputAction.CallbackContext ctx)
