@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mail;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
@@ -9,7 +10,7 @@ using UnityEngine.Rendering.Universal;
 
 public class Panneau : IInteractable
 {
-    [SerializeField] private float zoneSize = 10;
+    [SerializeField] private float _initialZoneSize = 10;
     [SerializeField] private DecalProjector decal;
     [SerializeField] private float angleRange = 10;
     [SerializeField] private GameObject pannalAnchor;
@@ -19,8 +20,32 @@ public class Panneau : IInteractable
     [SerializeField] public TextMeshPro textUI;
     
     private Vector3 defaultRotation;
+    public Alterable<float> internalZoneSize;
 
     static public Panneau instance = null;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+        defaultRotation = pannalAnchor.transform.rotation.eulerAngles;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        internalZoneSize = new Alterable<float>(_initialZoneSize);
+        UpdateDecal();
+
+        PositionPanal();
+    }
 
     public void PickUp(Transform parent, MonoBehaviour newOwner)
     {
@@ -58,7 +83,6 @@ public class Panneau : IInteractable
             EnableResourcesAround();
         }
 
-
     }
 
     public void EnableUpgrades(bool value)
@@ -85,28 +109,6 @@ public class Panneau : IInteractable
             o.transform.localPosition = new Vector3(0, i++ * upgradeDistance, 0);
             o.transform.localRotation = Quaternion.identity;
         }
-    }
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-
-        defaultRotation = pannalAnchor.transform.rotation.eulerAngles;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        decal.size = new Vector3(zoneSize, zoneSize, 1);
-
-        PositionPanal();
     }
 
     void PositionPanal()
@@ -138,7 +140,7 @@ public class Panneau : IInteractable
     public void EnableResourcesAround()
     {
         Collider[] hitColliders =
-            Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
+            Physics.OverlapSphere(transform.position, _initialZoneSize / 2f, LayerMask.GetMask("Resource"));
         foreach (Collider hitCollider in hitColliders)
         {
             hitCollider.GetComponent<IPannalInteractable>().EnableResource(0);
@@ -148,7 +150,7 @@ public class Panneau : IInteractable
     public void DisableResourcesAround()
     {
         Collider[] hitColliders =
-            Physics.OverlapSphere(transform.position, zoneSize / 2f, LayerMask.GetMask("Resource"));
+            Physics.OverlapSphere(transform.position, _initialZoneSize / 2f, LayerMask.GetMask("Resource"));
         foreach (Collider hitCollider in hitColliders)
         {
             hitCollider.GetComponent<IPannalInteractable>().DisableResource();
@@ -158,5 +160,11 @@ public class Panneau : IInteractable
     public override bool CanInteract()
     {
         return GameManager.instance.state == GameManager.GameState.BUYING;
+    }
+
+    public void UpdateDecal()
+    {
+        float size = internalZoneSize.CalculateValue();
+        decal.size = new Vector3(size, size, 1);
     }
 }

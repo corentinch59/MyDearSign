@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9db5580de08c2449982c5fa91688ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoneSize: 3
+  _initialZoneSize: 3
   decal: {fileID: 2874530021178169983}
   angleRange: 10
   pannalAnchor: {fileID: 3765053519332014839}

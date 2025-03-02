@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (ctx.started)
         {
-            _sprintObj = _internalSpeed.AddTransformator((float x) => x * _sprintSpeedMult, 1);
+            _sprintObj = _internalSpeed.AddTransformator((x) => x * _sprintSpeedMult, 1);
         }
 
         if (ctx.canceled)
