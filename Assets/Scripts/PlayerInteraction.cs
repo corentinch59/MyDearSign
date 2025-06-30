@@ -28,6 +28,10 @@ public class PlayerInteraction : MonoBehaviour
             foreach (var interactable in interactables)
             {
                 if (!interactable.CanInteract()) continue;
+                
+                // if we have pannal in hand, we must interact with it
+                // SHITTY FIX
+                if (Panneau.instance.owner == this && interactable is not Panneau) continue;
             
                 var distance = Vector3.Distance(interactable.transform.position, transform.position);
                 if (distance < closestDistance && distance <= _interactionRange)
